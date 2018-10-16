@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { Dimensions, Linking, NativeModules, Platform, ScrollView, Text, View } from 'react-native';
-import Expo from 'expo';
+import { Constants, registerRootComponent } from 'expo';
 import jasmineModule from 'jasmine-core/lib/jasmine-core/jasmine';
 import Immutable from 'immutable';
 
@@ -47,12 +47,12 @@ async function getTestModulesAsync() {
     require('./tests/AdMobRewarded'),
     require('./tests/Video'),
     require('./tests/Permissions'),
-    require('./tests/MediaLibrary'),
+    // require('./tests/MediaLibrary'),
     require('./tests/Notifications'),
     require('./tests/FBNativeAd'),
     require('./tests/FBBannerAd'),
   ];
-  if (Expo.Constants.isDevice) {
+  if (Constants.isDevice) {
     modules = modules.concat([require('./tests/Brightness')]);
     modules = modules.concat([require('./tests/BarCodeScanner')]);
     if (Platform.OS === 'android') {
@@ -374,7 +374,7 @@ class App extends React.Component {
       this._scrollViewRef.scrollTo({
         y:
           Math.max(0, contentHeight - Dimensions.get('window').height) +
-          Expo.Constants.statusBarHeight,
+          Constants.statusBarHeight,
       });
     }
   };
@@ -406,7 +406,7 @@ class App extends React.Component {
         <View
           style={{
             flex: 1,
-            marginTop: Expo.Constants.statusBarHeight || 18,
+            marginTop: Constants.statusBarHeight || 18,
             alignItems: 'center',
             justifyContent: 'center',
           }}>
@@ -419,7 +419,7 @@ class App extends React.Component {
       <View
         style={{
           flex: 1,
-          marginTop: Expo.Constants.statusBarHeight || 18,
+          marginTop: Constants.statusBarHeight || 18,
           alignItems: 'stretch',
           justifyContent: 'center',
         }}
@@ -440,4 +440,4 @@ class App extends React.Component {
     );
   }
 }
-Expo.registerRootComponent(App);
+registerRootComponent(App);
